@@ -10,8 +10,8 @@
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="http://localhost:8080/">BlogVT</a>
-    <form class="d-flex" role="search" th:action="@{/search}" name="name">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="d-flex" role="search" th:action="@{/home}" >
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"name="name">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
@@ -34,7 +34,7 @@
     <tr th:each="blog,status : ${blogList}">
         <th th:text="${status.count}" ></th>
         <th th:text="${blog.getId()}" ></th>
-        <td th:text="${blog.getBlog_name()}"></td>
+        <td th:text="${blog.getName()}"></td>
         <td th:text="${blog.getSummary()}"></td>
         <td th:text="${blog.getContent()}"></td>
         <td ><a th:href="@{/view/__${blog.getId()}__}"><button>View</button></a></td>
@@ -43,6 +43,7 @@
     </tr>
     </tbody>
 </table>
+
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

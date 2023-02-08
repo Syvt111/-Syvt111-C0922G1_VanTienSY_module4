@@ -10,8 +10,8 @@
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="http://localhost:8080/">BlogVT</a>
-    <form class="d-flex" role="search" th:action="@{/search}" name="name">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="d-flex" role="search" th:action="@{/search}">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"name="name">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
@@ -26,15 +26,17 @@
     <th scope="col">Blog Name</th>
     <th scope="col">Summary</th>
     <th scope="col">Content</th>
+    <th scope="col">Date Create</th>
     <th style="text-align: center" scope="col">Action</th>
   </tr>
   </thead>
   <tbody>
   <tr >
     <th th:text="${blog.getId()}" ></th>
-    <td th:text="${blog.getBlog_name()}"></td>
+    <td th:text="${blog.getName()}"></td>
     <td th:text="${blog.getSummary()}"></td>
     <td th:text="${blog.getContent()}"></td>
+    <td th:text="${blog.getDateCreate()}"></td>
     <td ><a th:href="@{/delete/__${blog.getId()}__}"><button>Delete</button></a></td>
   </tr>
   </tbody>

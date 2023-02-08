@@ -10,7 +10,7 @@
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="http://localhost:8080/">BlogVT</a>
-    <form class="d-flex" role="search" action="search">
+    <form class="d-flex" role="search" th:action="@{/search}" name="name">
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
@@ -21,7 +21,7 @@
 <form action="create" method="post" th:object="${blog}">
   <table class="table table-striped table-bordered">
      <tr>
-       <th>STT</th>
+       <th>Id</th>
        <td><input type="number" th:field="*{id}"></td>
      </tr>
     <tr>
