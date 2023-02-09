@@ -81,4 +81,8 @@ public class BlogApp {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public void setBlogCategory(BlogCategory blogCategory) {
+        this.blogCategory = blogCategory;
+    }
 }
