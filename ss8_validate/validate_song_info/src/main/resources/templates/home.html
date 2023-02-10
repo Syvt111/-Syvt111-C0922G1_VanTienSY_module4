@@ -7,28 +7,50 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="http://localhost:8080/">MuZiz</a>
+        <form class="d-flex" role="search"action="/" >
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"name="songName" th:value="${songName}">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
 <h3 style="text-align: center">Song List</h3>
-<button class="button" type="button"><a th:href="@{/create}">Create New Song</a></button>
+<button class="btn" type="button"><a th:href="@{/create}">Create New Song</a></button>
 <p th:text="${msg}" style="color: red"></p>
 <table class="table">
     <thead>
     <tr>
         <th scope="col">STT</th>
+        <th scope="col">ID</th>
         <th scope="col">Song Name</th>
         <th scope="col">Artist</th>
         <th scope="col">Type</th>
+        <th colspan="2" >Action</th>
 
     </tr>
     </thead>
     <tbody>
-    <tr th:each="song,status : ${songList}">
-        <th th:text="${status.count}" ></th>
-        <th th:text="${song.songName}" ></th>
-        <th th:text="${song.artist}" ></th>
-        <th th:text="${song.type}" ></th>
+    <tr th:each="song,status : ${songPage}">
+        <td th:text="${status.count}" ></td>
+        <td th:text="${song.id}" ></td>
+        <td th:text="${song.songName}" ></td>
+        <td th:text="${song.artist}" ></td>
+        <td th:text="${song.type}" ></td>
+        <td ><a th:href="@{/edit/__${song.getId()}__}"><button class="btn btn-success">Edit</button></a></td>
+        <td ><a th:href="@{/delete/__${song.getId()}__}"><button class="btn btn-danger">Delete</button></a></td>
+
+
     </tr>
     </tbody>
 </table>
+
+<div>
+    <a th:href="@{/(page=${songPage.number - 1} , name=${songName})}" th:if="${songPage.hasPrevious()}"><button class="btn btn-light ">Previous</button></a>
+    <span th:text="${songPage.number + 1}"></span>/<span th:text="${songPage.totalPages}"></span>
+    <a th:href="@{/(page=${songPage.number + 1} , name=${songName})}" th:if="${songPage.hasNext()}"><button class="btn btn-light ">Next</button></a>
+</div>
 
 </body>
 
