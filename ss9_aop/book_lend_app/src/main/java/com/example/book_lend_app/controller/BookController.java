@@ -64,11 +64,16 @@ public class BookController {
     public String lend(@ModelAttribute OrderBook orderBook, @ModelAttribute Book book, RedirectAttributes attributes, @PathVariable int id) {
         oderBookService.save(orderBook);
         Book book1 = bookService.findById(id);
-        book.setId(book1.getId());
-        book.setAmount(book1.getAmount() - 1);
-        bookService.save(book);
-        attributes.addFlashAttribute("msg", "Lend Successfully !");
-        return "redirect:/";
+        if (book1.getAmount()==0){
+            return "/error";
+
+        }else {
+            book.setId(book1.getId());
+            book.setAmount(book1.getAmount() - 1);
+            bookService.save(book);
+            attributes.addFlashAttribute("msg", "Lend Successfully !");
+            return "redirect:/";
+        }
 
     }
 
@@ -83,16 +88,17 @@ public class BookController {
     public String pay(@ModelAttribute Book book,RedirectAttributes redirectAttributes , @RequestParam int code) {
         OrderBook orderBook = oderBookService.findOrderBookByCode(code);
         if (orderBook==null){
-            redirectAttributes.addFlashAttribute("error","Nhập sai mã sách");
-            return "redirect:/pay";
+            redirectAttributes.addFlashAttribute("error","Nhập sai mã sách !");
+            return "pay";
         }else {
             Book book1 = bookService.findBookByNameContaining(orderBook.getName());
             book.setId(book1.getId());
             book.setAmount(book1.getAmount() + 1);
+            book.setName(book1.getName());
             bookService.save(book);
             oderBookService.delete(orderBook.getId());
             redirectAttributes.addFlashAttribute("msg", "Pay Successfully !");
-            return "redirect:/home";
+            return "redirect:/";
         }
 
     }
