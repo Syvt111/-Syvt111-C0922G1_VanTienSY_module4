@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class SongInfoController {
 
     @Autowired
-    ISongInfoService iSongInfoService;
+   private ISongInfoService iSongInfoService;
 
     @GetMapping("")
     public String showAllAndSearchSort(@RequestParam(required = false, defaultValue = "") String songName, Model model,
