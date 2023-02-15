@@ -1,25 +1,23 @@
-package com.example.blog.model;
+package com.example.blog.DTOBlogApp;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class BlogCategory {
+public class DTOBlogCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @JsonBackReference
-    @OneToMany(mappedBy = "blogCategory", cascade = CascadeType.ALL)
-    private Set<BlogApp> blogAppSet;
 
-    public BlogCategory() {
+    @OneToMany(mappedBy = "blogCategory",cascade = CascadeType.ALL)
+    private Set<DTOBlogApp> blogAppSet ;
+
+    public DTOBlogCategory() {
     }
 
-    public BlogCategory(int id, String name, Set<BlogApp> blogAppSet) {
+    public DTOBlogCategory(int id, String name, Set<DTOBlogApp> blogAppSet) {
         this.id = id;
         this.name = name;
         this.blogAppSet = blogAppSet;
@@ -41,11 +39,11 @@ public class BlogCategory {
         this.name = name;
     }
 
-    public Set<BlogApp> getBlogAppSet() {
+    public Set<DTOBlogApp> getBlogAppSet() {
         return blogAppSet;
     }
 
-    public void setBlogAppSet(Set<BlogApp> blogAppSet) {
+    public void setBlogAppSet(Set<DTOBlogApp> blogAppSet) {
         this.blogAppSet = blogAppSet;
     }
 }

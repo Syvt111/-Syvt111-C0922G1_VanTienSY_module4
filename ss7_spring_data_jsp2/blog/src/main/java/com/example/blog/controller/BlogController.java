@@ -37,7 +37,7 @@ public class BlogController {
 
     @GetMapping("")
     public String showAllAndSearchSort(@RequestParam(required = false,defaultValue = "") String name, Model model,
-                             @PageableDefault(size = 2,page = 0,sort="name",direction = Sort.Direction.ASC)Pageable pageable) {
+                             @PageableDefault(size = 3,page = 0,sort="name",direction = Sort.Direction.ASC)Pageable pageable) {
         Page<BlogApp> blogPage = blogService.findBlogAppByNameContaining(name,pageable);
         model.addAttribute("blogPage",blogPage);
         model.addAttribute("name",name);
