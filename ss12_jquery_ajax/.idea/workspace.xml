@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7c716c2c-8ec2-41c6-bdda-d95a288c3d42" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/demo2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ss10_session_cookie/add_product_to_cart/src/main/java/com/example/add_product_to_cart/AddProductToCartApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ss10_session_cookie/add_product_to_cart/src/main/java/com/example/add_product_to_cart/AddProductToCartApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ss10_session_cookie/add_product_to_cart/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../ss10_session_cookie/add_product_to_cart/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ss10_session_cookie/add_product_to_cart/src/main/resources/templates/shop.html" beforeDir="false" afterPath="$PROJECT_DIR$/../ss10_session_cookie/add_product_to_cart/src/main/resources/templates/shop.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2LnsufpL39iLXd8N59WXm69RmD1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7c716c2c-8ec2-41c6-bdda-d95a288c3d42" name="Default Changelist" comment="" />
+      <created>1676518405041</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1676518405041</updated>
+      <workItem from="1676518407255" duration="674000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

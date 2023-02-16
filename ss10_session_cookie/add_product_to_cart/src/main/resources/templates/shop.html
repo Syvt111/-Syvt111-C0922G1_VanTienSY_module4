@@ -20,6 +20,7 @@
 <h3 style="text-align: center"><span>Product Shop</span></h3>
 <p>
     <a href="/shopping-cart"><button class="btn btn-success">Your cart</button></a>
+<button button class="btn btn-success" ><a>Total Products: <span th:text="${cart.countProductQuantity()}"></span></a></button>
 </p>
 <button class="button" type="button"><a th:href="@{/create}">Add new product</a></button>
 <p th:text="${msg}" style="color: red"></p>
