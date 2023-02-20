@@ -13,5 +13,5 @@ public interface ICustomerService {
     void save(Customer customer);
     void delete(int id);
     void edit(int id);
-    Page<Customer>findCustomerByNameContaining(String name, Pageable pageable);
+    Page<Customer> findCustomerByNameAndEmailAndCustomerTypeContaining(String name, String email, String customerType, Pageable pageable);;
 }

@@ -5,10 +5,17 @@
 <body>
 <div th:replace="~{layout :: header}"></div>
 <div th:replace="~{layout :: navbar}"></div>
-<div >
+<div>
     <h3 style="text-align: center">Customer List</h3>
-    <form class="d-flex" role="search" th:action="@{/customer}" >
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"name="name">
+    <form class="d-flex" role="search" th:action="@{/search}">
+       <span>Enter Name</span> <input class="form-control me-2" type="text" placeholder="Name" aria-label="Search" name="name">
+        <span>Enter Email</span> <input type="text" name="email" placeholder="Email">
+        <span>Customer Type</span> <select  name="customerTypeSearch">
+            <option value=""> None</option>
+            <option  th:each="type : ${customerType}"
+                    th:text="${type.name}"
+                    th:value="${type.id}"></option>
+        </select>
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
     <button class="button" type="button"><a th:href="@{/customer/create}">Create New Customer</a></button>
@@ -31,22 +38,25 @@
         </thead>
         <tbody>
         <tr th:each="customer : ${customers}">
-            <th th:text="${customer.getId()}" ></th>
-            <th th:text="${customer.customerType.getName()}" ></th>
-            <th th:text="${customer.name}" ></th>
-            <th th:text="${customer.dayOfBirth}" ></th>
-            <th th:if="${customer.gender==false}" >
+            <th th:text="${customer.getId()}"></th>
+            <th th:text="${customer.customerType.getName()}"></th>
+            <th th:text="${customer.name}"></th>
+            <th th:text="${customer.dayOfBirth}"></th>
+            <th th:if="${customer.gender==false}">
                 <span>Nữ</span>
-            </th><th th:if="${customer.gender==true}" >
+            </th>
+            <th th:if="${customer.gender==true}">
                 <span>Nam</span>
             </th>
-            <th th:text="${customer.idCard}" ></th>
-            <th th:text="${customer.phoneNumber}" ></th>
-            <th th:text="${customer.email}" ></th>
-            <th th:text="${customer.address}" ></th>
-            <td ><a th:href="@{/customer/edit/__${customer.getId()}__}"><button class="btn btn-success">Edit</button></a></td>
-<!--            <td >-->
-<!--                <a th:href="@{/customer/delete/__${customer.getId()}__}"><button class="btn btn-danger" >Delete</button></a></td>-->
+            <th th:text="${customer.idCard}"></th>
+            <th th:text="${customer.phoneNumber}"></th>
+            <th th:text="${customer.email}"></th>
+            <th th:text="${customer.address}"></th>
+            <td><a th:href="@{/customer/edit/__${customer.getId()}__}">
+                <button class="btn btn-success">Edit</button>
+            </a></td>
+            <!--            <td >-->
+            <!--                <a th:href="@{/customer/delete/__${customer.getId()}__}"><button class="btn btn-danger" >Delete</button></a></td>-->
 
             <td>
                 <button th:attr="onclick=|deleteCustomer('${customer.id}','${customer.name}')|"
@@ -60,9 +70,13 @@
         </tbody>
     </table>
     <div>
-        <a th:href="@{/customer(page=${customers.number - 1} , id=${id})}" th:if="${customers.hasPrevious()}"><button class="btn btn-light ">Previous</button></a>
+        <a th:href="@{/customer(page=${customers.number - 1} , id=${id})}" th:if="${customers.hasPrevious()}">
+            <button class="btn btn-light ">Previous</button>
+        </a>
         <span th:text="${customers.number + 1}"></span>/<span th:text="${customers.totalPages}"></span>
-        <a th:href="@{/customer(page=${customers.number + 1} , id=${id})}" th:if="${customers.hasNext()}"><button class="btn btn-light ">Next</button></a>
+        <a th:href="@{/customer(page=${customers.number + 1} , id=${id})}" th:if="${customers.hasNext()}">
+            <button class="btn btn-light ">Next</button>
+        </a>
     </div>
 </div>
 
@@ -92,7 +106,7 @@
 <div th:replace="~{layout :: footer}"></div>
 </body>
 <script>
-    function deleteCustomer(id,name){
+    function deleteCustomer(id, name) {
         document.getElementById("deleteId").value = id;
         document.getElementById("deleteName").innerText = name;
     }

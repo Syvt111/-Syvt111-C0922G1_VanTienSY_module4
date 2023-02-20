@@ -21,12 +21,28 @@ public class CustomerController {
     ICustomerTypeService customerTypeService;
 
     @GetMapping("customer")
-    public String showAllAndSearchSort(@RequestParam(required = false, defaultValue = "") String name, Model model,
+    public String showAllAndSearchSort(@RequestParam(required = false, defaultValue = "") String name,
+                                       @RequestParam(defaultValue = "") String email,
+                                       @RequestParam(defaultValue = "") String customerTypeSearch, Model model,
                                        @PageableDefault(size = 7, page = 0, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 
-        Page<Customer> customers = customerService.findCustomerByNameContaining(name, pageable);
+        Page<Customer> customers = customerService.findCustomerByNameAndEmailAndCustomerTypeContaining(name,email,customerTypeSearch, pageable);
+
         model.addAttribute("customers", customers);
-        model.addAttribute("name", name);
+        model.addAttribute("customerType",customerTypeService.findAll());
+        return "customer";
+    }
+
+    @GetMapping("search")
+    public String search(@RequestParam(required = false, defaultValue = "") String name,
+                                       @RequestParam(defaultValue = "") String email,
+                                       @RequestParam(defaultValue = "") String customerTypeSearch, Model model,
+                                       @PageableDefault(size = 7, page = 0, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        Page<Customer> customers = customerService.findCustomerByNameAndEmailAndCustomerTypeContaining(name,email,customerTypeSearch, pageable);
+
+        model.addAttribute("customers", customers);
+        model.addAttribute("customerType",customerTypeService.findAll());
         return "customer";
     }
 
