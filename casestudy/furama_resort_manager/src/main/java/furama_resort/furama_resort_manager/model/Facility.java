@@ -10,13 +10,13 @@ public class Facility {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)",unique = true)
     private String name;
 
     private int area;
 
     private double cost;
-
+@Column(unique = true,nullable = false)
     private int maxPeople;
 
     @ManyToOne

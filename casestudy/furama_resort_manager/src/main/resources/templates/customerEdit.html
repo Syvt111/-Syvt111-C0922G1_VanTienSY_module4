@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<div th:replace="~{layout :: header}"></div>
+<div th:replace="~{layout :: navbar}"></div>
+<div>
+    <h3 style="text-align: center">Edit Customer</h3>
+    <p th:text="${msg}" style="color: red"></p>
+    <form th:href="@{/customer/edit/__${customer.getId()}__}" method="post" th:object="${customer}">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>Id</th>
+                <td><input type="hidden" th:field="*{id}" th:text="${customer.id}"></td>
+            </tr>
+            <tr>
+                <th>Customer Type</th>
+                <td >
+                    <select th:field="*{customerType}" >
+                        <option th:each="type : ${customerTypes}" th:text="${type.name}"
+                                th:value="${type.id}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Customer Name</th>
+                <td><input type="text" th:field="*{name}"></td>
+            </tr>
+            <tr>
+                <th>Birthday</th>
+                <td><input type="date" th:field="*{dayOfBirth}"></td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td><input type="radio" th:field="*{gender}" th:value="${0}"th:text="Nữ">
+                    <input type="radio" th:field="*{gender}" th:value="${1}"th:text="Nam">
+                </td>
+            </tr>
+            <tr>
+                <th>Id Card</th>
+                <td><input type="text" th:field="*{idCard}"></td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
+                <td><input type="text" th:field="*{phoneNumber}"></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><input type="email" th:field="*{email}"></td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td><input type="text" th:field="*{address}"></td>
+            </tr>
+
+            <tr>
+                <th colspan="2" style="text-align: center">
+                    <button type="submit">Save</button>
+                </th>
+            </tr>
+        </table>
+
+    </form>
+
+</div>
+<div th:replace="~{layout :: footer}"></div>
+
+</body>
+</html>

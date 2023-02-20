@@ -15,18 +15,18 @@ public class Employee {
     @Column(columnDefinition = "date")
     private String dayOfBirth;
 
-    @Column(columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)",unique = true)
     private String idCard;
 
     private double salary;
 
-    @Column(columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)",unique = true)
     private String phoneNumber;
 
-    @Column(columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)",unique = true)
     private String email;
 
-    @Column(columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)",nullable = false)
     private String address;
 
     @ManyToOne
@@ -42,7 +42,7 @@ public class Employee {
     private Division division;
 
     @OneToOne
-    @JoinColumn(name = "username", referencedColumnName = "userName")
+    @JoinColumn(name = "username", referencedColumnName = "userName",unique = true)
     private User user;
 
     @OneToMany(mappedBy = "employee")

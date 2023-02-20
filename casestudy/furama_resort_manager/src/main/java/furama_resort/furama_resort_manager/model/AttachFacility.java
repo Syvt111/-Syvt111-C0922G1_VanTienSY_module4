@@ -10,7 +10,7 @@ public class AttachFacility {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)", updatable = false)
     private  String name;
 
     private double cost;

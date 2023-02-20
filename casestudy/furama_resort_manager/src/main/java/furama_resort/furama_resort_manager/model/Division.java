@@ -1,15 +1,13 @@
 package furama_resort.furama_resort_manager.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 
     @Entity
     public class Division {
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
         @Column(columnDefinition = "varchar(45)")
         private String name;

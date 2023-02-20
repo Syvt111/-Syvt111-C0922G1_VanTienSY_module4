@@ -21,13 +21,13 @@ public class Customer {
 
     private boolean gender;
 
-    @Column(columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)",unique = true)
     private String idCard;
 
-    @Column(columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)",unique = true)
     private String phoneNumber;
 
-    @Column(columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)",unique = true)
     private String email;
 
     @Column(columnDefinition = "varchar(45)")
