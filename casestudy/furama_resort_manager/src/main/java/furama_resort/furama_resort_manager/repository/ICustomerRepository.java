@@ -14,7 +14,9 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Query(value = "select * from Customer where name like concat('%',:name,'%') and email" +
             " like concat('%',:searchEmail,'%')" +
-            " and customer_type_id like concat('%',:customerType,'%')", nativeQuery = true)
-    Page<Customer> search(@Param("name") String name, @Param("searchEmail") String email, @Param("customerType") String customerType, Pageable pageable);
+            " and customer_type_id = :customerType", nativeQuery = true)
+    Page<Customer> search(@Param("name") String name, @Param("searchEmail") String email, @Param("customerType") int customerType, Pageable pageable);
+    Page<Customer> findByNameContainingAndEmailContainingAndCustomerType_Id(String name,String email,int customerType,Pageable pageable);
+    Page<Customer>findByNameContainingAndEmailContaining(String name, String email,Pageable pageable);
 
 }

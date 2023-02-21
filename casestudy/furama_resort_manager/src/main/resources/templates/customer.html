@@ -6,75 +6,96 @@
 <div th:replace="~{layout :: header}"></div>
 <div th:replace="~{layout :: navbar}"></div>
 <div>
-    <h3 style="text-align: center">Customer List</h3>
-    <form class="d-flex" role="search" th:action="@{/search}">
-       <span>Enter Name</span> <input class="form-control me-2" type="text" placeholder="Name" aria-label="Search" name="name">
-        <span>Enter Email</span> <input type="text" name="email" placeholder="Email">
-        <span>Customer Type</span> <select  name="customerTypeSearch">
-            <option value=""> None</option>
-            <option  th:each="type : ${customerType}"
-                    th:text="${type.name}"
-                    th:value="${type.id}"></option>
-        </select>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-    <button class="button" type="button"><a th:href="@{/customer/create}">Create New Customer</a></button>
-    <p th:text="${msg}" style="color: red"></p>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Customer Type</th>
-            <th scope="col">Name</th>
-            <th scope="col">Birthday</th>
-            <th scope="col">Gender</th>
-            <th scope="col">ID Card</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Email</th>
-            <th scope="col">Address</th>
-            <th colspan="2" style="text-align: center" scope="col"></th>
-            <th colspan="2" style="text-align: center" scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="customer : ${customers}">
-            <th th:text="${customer.getId()}"></th>
-            <th th:text="${customer.customerType.getName()}"></th>
-            <th th:text="${customer.name}"></th>
-            <th th:text="${customer.dayOfBirth}"></th>
-            <th th:if="${customer.gender==false}">
-                <span>Nữ</span>
-            </th>
-            <th th:if="${customer.gender==true}">
-                <span>Nam</span>
-            </th>
-            <th th:text="${customer.idCard}"></th>
-            <th th:text="${customer.phoneNumber}"></th>
-            <th th:text="${customer.email}"></th>
-            <th th:text="${customer.address}"></th>
-            <td><a th:href="@{/customer/edit/__${customer.getId()}__}">
-                <button class="btn btn-success">Edit</button>
-            </a></td>
-            <!--            <td >-->
-            <!--                <a th:href="@{/customer/delete/__${customer.getId()}__}"><button class="btn btn-danger" >Delete</button></a></td>-->
-
-            <td>
-                <button th:attr="onclick=|deleteCustomer('${customer.id}','${customer.name}')|"
-                        type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                        data-bs-target="#exampleModalDelete"
-                        data-bs-whatever="@mdo">Xóa
-                </button>
-            </td>
-
-        </tr>
-        </tbody>
-    </table>
     <div>
-        <a th:href="@{/customer(page=${customers.number - 1} , id=${id})}" th:if="${customers.hasPrevious()}">
+        <h3 style="text-align: center">Customer List</h3>
+    </div>
+    <div>
+        <form th:action="@{/customer}">
+            <div class="row">
+                <div class="col-md-3">
+                    <button class="button" type="button"><a th:href="@{/customer/create}">Create New Customer</a>
+                    </button>
+                </div>
+
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <input class="form-control me-2" type="text"
+                           placeholder="Enter Name"
+                           name="nameSearch">
+                </div>
+                <div class="col-md-2 ">
+                    <input class="form-control me-2" type="text" name="emailSearch"
+                           placeholder="Enter Email">
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" name="customerTypeSearch">
+                        <option value="">-----Select Customer Type -----</option>
+                        <option th:each="type : ${customerType}"
+                                th:text="${type.name}"
+                                th:value="${type.id}"></option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <p th:text="${msg}" style="color: red"></p>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Customer Type</th>
+                <th scope="col">Name</th>
+                <th scope="col">Birthday</th>
+                <th scope="col">Gender</th>
+                <th scope="col">ID Card</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+                <th colspan="2" style="text-align: center" scope="col"></th>
+                <th colspan="2" style="text-align: center" scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="customer : ${customers}">
+                <th th:text="${customer.getId()}"></th>
+                <th th:text="${customer.customerType.getName()}"></th>
+                <th th:text="${customer.name}"></th>
+                <th th:text="${customer.dayOfBirth}"></th>
+                <th th:if="${customer.gender==false}">
+                    <span>Nữ</span>
+                </th>
+                <th th:if="${customer.gender==true}">
+                    <span>Nam</span>
+                </th>
+                <th th:text="${customer.idCard}"></th>
+                <th th:text="${customer.phoneNumber}"></th>
+                <th th:text="${customer.email}"></th>
+                <th th:text="${customer.address}"></th>
+                <td><a th:href="@{/customer/edit/__${customer.getId()}__}">
+                    <button class="btn btn-success">Edit</button>
+                </a></td>
+                <td>
+                    <button th:attr="onclick=|deleteCustomer('${customer.id}','${customer.name}')|"
+                            type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#exampleModalDelete"
+                            data-bs-whatever="@mdo">Delete
+                    </button>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a th:href="@{/customer(page=${customers.number - 1} ,nameSearch=${nameSearch},emailSearch=${emailSearch},customerTypeSearch=${customerTypeSearch})}" th:if="${customers.hasPrevious()}">
             <button class="btn btn-light ">Previous</button>
         </a>
         <span th:text="${customers.number + 1}"></span>/<span th:text="${customers.totalPages}"></span>
-        <a th:href="@{/customer(page=${customers.number + 1} , id=${id})}" th:if="${customers.hasNext()}">
+        <a th:href="@{/customer(page=${customers.number + 1} ,nameSearch=${nameSearch},emailSearch=${emailSearch},customerTypeSearch=${customerTypeSearch})}" th:if="${customers.hasNext()}">
             <button class="btn btn-light ">Next</button>
         </a>
     </div>
@@ -86,18 +107,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabelDelete">Xóa sản phẩm</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabelDelete">Delete Customer</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form th:action="@{/customer/delete}" method="post">
                 <div class="modal-body">
                     <input hidden type="text" id="deleteId" name="id">
-                    <span>Bạn có muốn xóa khách hàng</span>
+                    <span>Do you want to delete Customer : </span>
                     <span style="color:red;" id="deleteName"></span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary">Xóa khách hàng</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </div>
             </form>
         </div>

@@ -10,21 +10,21 @@ public class Facility {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "varchar(45)",unique = true)
+    @Column(columnDefinition = "varchar(45)", unique = true)
     private String name;
 
     private int area;
 
     private double cost;
-@Column(unique = true,nullable = false)
+    @Column(nullable = false)
     private int maxPeople;
 
     @ManyToOne
-    @JoinColumn(name = "rent_type_id",referencedColumnName = "id")
+    @JoinColumn(name = "rent_type_id", referencedColumnName = "id")
     private RentType rentType;
 
     @ManyToOne
-    @JoinColumn(name = "facility_type_id",referencedColumnName = "id")
+    @JoinColumn(name = "facility_type_id", referencedColumnName = "id")
     private FacilityType facilityType;
 
     @Column(columnDefinition = "varchar(45)")
@@ -50,7 +50,7 @@ public class Facility {
                     int maxPeople, RentType rentType, FacilityType facilityType,
                     String standardRoom, String descriptionOtherConvenience,
                     double poolArea, int numberOfFloors, String facilityFree,
-                    Set<Contract> contractSet, boolean flag) {
+                    Set<Contract> contractSet) {
         this.id = id;
         this.name = name;
         this.area = area;

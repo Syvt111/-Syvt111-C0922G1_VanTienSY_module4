@@ -12,12 +12,13 @@ import java.util.List;
 @Service
 public class CustomerService implements ICustomerService {
     @Autowired
-    ICustomerRepository customerRepository;
+    private ICustomerRepository customerRepository;
 
     @Override
     public List<Customer> findAll() {
         return customerRepository.findAll();
     }
+
 
     @Override
     public Customer findById(int id) {
@@ -35,13 +36,18 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void edit(int id) {
-
+    public Page<Customer> findCustomerByNameAndEmailAndCustomerTypeContaining(String name, String email, int customerType, Pageable pageable) {
+        return customerRepository.search(name,email,customerType,pageable);
     }
 
     @Override
-    public Page<Customer> findCustomerByNameAndEmailAndCustomerTypeContaining(String name, String email, String customerType, Pageable pageable) {
-        return customerRepository.search(name,email,customerType,pageable);
+    public Page<Customer> findByNameContainingAndEmailContainingAndCustomerType_Id(String name, String email, int customerType,Pageable pageable) {
+        return customerRepository.findByNameContainingAndEmailContainingAndCustomerType_Id(name,email,customerType,pageable);
+    }
+
+    @Override
+    public Page<Customer> findByNameContainingAndEmailContaining(String name, String email,Pageable pageable) {
+        return customerRepository.findByNameContainingAndEmailContaining(name,email,pageable);
     }
 
 
