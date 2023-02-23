@@ -54,7 +54,7 @@ public class FacilityController {
 
     @RequestMapping("/edit")
     public String edit(@ModelAttribute Facility facility, RedirectAttributes redirectAttributes, @RequestParam int id) {
-        facilityService.findById(id);
+//        facilityService.findById(id);
         facilityService.save(facility);
         redirectAttributes.addFlashAttribute("msg", "Successfully edit facility !");
         return "redirect:/facility";

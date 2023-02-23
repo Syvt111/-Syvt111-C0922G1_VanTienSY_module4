@@ -57,10 +57,9 @@ public class CustomerController {
         List<Customer> customerList = customerService.findAll();
         for (Customer cus : customerList) {
             if (cus.getIdCard().equals(customer.getIdCard()) || cus.getEmail().equals(customer.getEmail()) || cus.getPhoneNumber().equals(customer.getPhoneNumber())) {
-                redirectAttributes.addFlashAttribute("msg","Add failed ! ");
+                redirectAttributes.addFlashAttribute("msg", "Add failed ! ");
                 return "redirect:/customer/create";
             }
-
         }
         customerService.save(customer);
         redirectAttributes.addFlashAttribute("msg", "Successfully added new customer");

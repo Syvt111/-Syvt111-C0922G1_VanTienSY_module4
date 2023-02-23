@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-md-2">
                     <select class="form-control" name="facilityType">
-                        <option value="">----- Select Facility Type -----</option>
+                        <option value="">-----Select Facility Type-----</option>
                         <option th:each="type : ${facilityTypes}"
                                 th:text="${type.name}"
                                 th:value="${type.id}"></option>

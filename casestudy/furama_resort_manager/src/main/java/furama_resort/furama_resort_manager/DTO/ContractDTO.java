@@ -1,45 +1,32 @@
-package furama_resort.furama_resort_manager.model;
+package furama_resort.furama_resort_manager.DTO;
 
-import furama_resort.furama_resort_manager.service.IContractService;
-import org.springframework.beans.factory.annotation.Autowired;
+import furama_resort.furama_resort_manager.model.ContractDetail;
+import furama_resort.furama_resort_manager.model.Customer;
+import furama_resort.furama_resort_manager.model.Employee;
+import furama_resort.furama_resort_manager.model.Facility;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-public class Contract {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ContractDTO {
+
     private int id;
 
-    @Column(columnDefinition = "datetime")
     private String startDate;
 
-    @Column(columnDefinition = "datetime")
+
     private String endDate;
 
     private double deposit;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
 
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name = "facility_id", referencedColumnName = "id")
     private Facility facility;
-
-    @OneToMany(mappedBy = "contract")
-    private Set<ContractDetail> contractDetailSet;
-
     private double total;
 
-    public Contract(int id, String startDate, String endDate, double deposit, Employee employee, Customer customer,
-                    Facility facility, Set<ContractDetail> contractDetailSet, double total) {
+    public ContractDTO(int id, String startDate, String endDate, double deposit, Employee employee, Customer customer, Facility facility, double total) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -47,8 +34,26 @@ public class Contract {
         this.employee = employee;
         this.customer = customer;
         this.facility = facility;
-        this.contractDetailSet = contractDetailSet;
         this.total = total;
+    }
+
+    public ContractDTO(int id, String startDate, String endDate, double deposit, Employee employee, Customer customer,
+                       Facility facility, Set<ContractDetail> contractDetailSet, double total) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.deposit = deposit;
+        this.employee = employee;
+        this.customer = customer;
+        this.total = total;
+    }
+
+    public Facility getFacility() {
+        return facility;
+    }
+
+    public void setFacility(Facility facility) {
+        this.facility = facility;
     }
 
     public double getTotal() {
@@ -59,10 +64,10 @@ public class Contract {
         this.total = total;
     }
 
-    public Contract() {
+    public ContractDTO() {
     }
 
-    public Contract(int id, String startDate, String endDate,
+    public ContractDTO(int id, String startDate, String endDate,
                     double deposit, Employee employee,
                     Customer customer, Facility facility,
                     Set<ContractDetail> contractDetailSet) {
@@ -72,8 +77,6 @@ public class Contract {
         this.deposit = deposit;
         this.employee = employee;
         this.customer = customer;
-        this.facility = facility;
-        this.contractDetailSet = contractDetailSet;
     }
 
 
@@ -123,22 +126,6 @@ public class Contract {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-
-    public Facility getFacility() {
-        return facility;
-    }
-
-    public void setFacility(Facility facility) {
-        this.facility = facility;
-    }
-
-    public Set<ContractDetail> getContractDetailSet() {
-        return contractDetailSet;
-    }
-
-    public void setContractDetailSet(Set<ContractDetail> contractDetailSet) {
-        this.contractDetailSet = contractDetailSet;
     }
 
 }

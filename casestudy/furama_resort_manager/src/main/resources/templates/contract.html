@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}">
+    <style>
+        .modal-dialog {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{layout :: header}"></div>
+<div th:replace="~{layout :: navbar}"></div>
+<div>
+    <div>
+        <h3 style="text-align: center">Contract List</h3>
+    </div>
+    <div>
+        <form th:action="@{/contract}" method="get">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button"
+                            class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addContractModal">
+                        Create new Contract
+                    </button>
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-2">
+                    <input class="form-control me-2" type="text"
+                           placeholder=" Enter Contract Id" aria-label="Search"
+                           name="id">
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br>
+    <p th:text="${msg}" style="color: red"></p>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Contract ID</th>
+                <th scope="col">Facility</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Day</th>
+                <th scope="col">Deposit</th>
+                <th scope="col">Total</th>
+                <th scope="col">Attach Facilities</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ct : ${contractPage}">
+                <th th:text="${ct.getId()}"></th>
+                <th th:text="${ct.facility.name}"></th>
+                <th th:text="${ct.customer.name}"></th>
+                <th th:text="${ct.startDate}"></th>
+                <th th:text="${ct.endDate}"></th>
+                <th th:text="${ct.deposit}"></th>
+                <th th:text="${ct.total}">
+                </th>
+                <th>
+                    <button type="button"
+                            class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAttachFacilityModal">
+                        +
+                    </button>
+                    <button type="button"
+                            class="btn btn-success" data-bs-toggle="modal" data-bs-target="#attachFacilityListModal">
+                        Attack Facility List
+                    </button>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a th:href="@{/contract(page=${contractPage.number - 1},id=${id})}"
+           th:if="${contractPage.hasPrevious()}">
+            <button class="btn btn-light ">Previous</button>
+        </a>
+        <span th:text="${contractPage.number + 1}"></span>/<span th:text="${contractPage.totalPages}"></span>
+        <a th:href="@{/contract(page=${contractPage.number + 1},id=${id})}"
+           th:if="${contractPage.hasNext()}">
+            <button class="btn btn-light ">Next</button>
+        </a>
+    </div>
+</div>
+<div th:replace="~{layout :: footer}"></div>
+
+<!--Modal Add Contract-->
+<div class="modal fade" id="addContractModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center m-2 p-0">
+                <h3 class="text-center text-success">Add New Contract</h3>
+            </div>
+            <form class="form-horizontal" action="/contract/create" method="post" th:object="${contract}">
+                <div class="modal-body px-2 py-0">
+                    <div class="m-2 row">
+                        <label class="col-sm-4 col-form-label">Start Day</label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="startDay" th:field="*{startDate}">
+                        </div>
+                    </div>
+                    <div class="m-2 row">
+                        <label class="col-sm-4 col-form-label">End Day</label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="endDay" th:field="*{endDate}">
+                        </div>
+                    </div>
+                    <div class="m-2 row">
+                        <label class="col-sm-4 col-form-label">Deposit</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="deposit" th:field="*{deposit}">
+                        </div>
+                    </div>
+                    <div class="m-2 row">
+                        <label class="col-sm-4 col-form-label">Total</label>
+                        <div id="totalDiv" class="col-sm-8">
+                            <input type="number" class="form-control" id="total">
+                        </div>
+                    </div>
+                    <div class="m-2 row">
+                        <label class="col-sm-4 col-form-label">Customer Name</label>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" th:field="*{customer.id}">
+                                <option th:each="customer : ${customers}" th:value="${customer.id}"
+                                        th:text="${customer.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="m-2 row">
+                        <label class="col-sm-4 col-form-label">Facility Name</label>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" th:field="*{facility.id}">
+                                <option th:each="facility : ${facilities}" th:value="${facility.id}"
+                                        th:text="${facility.getName()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="m-2 row">
+                        <label class="col-sm-4 col-form-label">Attach Facility</label>
+                        <div class="col-sm-8">
+                            <button type="button"
+                                    class="btn btn-success" data-bs-toggle="modal"
+                                    data-bs-target="#addAttachFacilityModal">
+                                +
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Contract</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Modal Add Attach Facility-->
+<div class="modal fade" id="addAttachFacilityModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center m-2 p-0">
+                <h3 class="text-center text-success">Add Attach Facility</h3>
+            </div>
+            <form class="form-horizontal" action="/contract/contractDetail/create" method="post" th:object="${contract}">
+                <div class="modal-body px-2 py-0">
+                    <div class="m-2 row">
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" th:field="*{customer.id}" id="attachFacilityName">
+                                <option th:each="attachFacility : ${attachFacilities}" th:value="${attachFacility.id}"
+                                        th:text="${attachFacility.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="m-2 row">
+                        <div class="col-sm-8">
+                            <label class="col-sm-4 col-form-label">Quality</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="quality">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Modal Show and Add Attach Facility-->
+<div class="modal fade" id="attachFacilityListModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center m-2 p-0">
+                <h3 class="text-center text-success">Attach Facility List</h3>
+            </div>
+            <form action="contract/contractDetail/create" th:object="${contractDetail}">
+                <div class="m-2 row">
+                    <div class="col-md-2">
+                        <label class="col-sm-4 col-form-label">Id</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-sm-4 col-form-label">Attach Facility Name</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-sm-4 col-form-label">Cost</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-sm-4 col-form-label">Unit</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-sm-4 col-form-label">Status</label>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                </div>
+                <div>
+                    <hr style="color: #262322; size: 5px">
+                </div>
+                <div class="m-2 row" th:each="af : ${attachFacilities}">
+                    <div class="col-md-2" >
+                        <label class="col-sm-4 col-form-label" th:text="${af.id}"></label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-sm-4 col-form-label" th:text="${af.name}"></label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-sm-4 col-form-label" th:text="${af.cost}"></label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-sm-4 col-form-label" th:text="${af.unit}"></label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-sm-4 col-form-label" th:text="${af.status}"></label>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit"
+                                class="btn btn-success" data-bs-toggle="modal">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
