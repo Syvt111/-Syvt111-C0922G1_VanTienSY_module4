@@ -1,10 +1,11 @@
 package furama_resort.furama_resort_manager.controller;
 
 import furama_resort.furama_resort_manager.DTO.ContractDTO;
-import furama_resort.furama_resort_manager.model.AttachFacility;
+import furama_resort.furama_resort_manager.DTO.ContractDetailDTO;
 import furama_resort.furama_resort_manager.model.Contract;
 import furama_resort.furama_resort_manager.model.ContractDetail;
 import furama_resort.furama_resort_manager.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,12 +13,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -43,8 +42,8 @@ public class ContractController {
         model.addAttribute("contractPage", contracts);
         model.addAttribute("id", id);
         model.addAttribute("contract", new Contract());
-        model.addAttribute("contractDetail",new ContractDetail());
-        model.addAttribute("contractDetails",contractDetailService.findAll());
+        model.addAttribute("contractDetail", new ContractDetail());
+        model.addAttribute("contractDetails", contractDetailService.findAll());
         model.addAttribute("customers", customerService.findAll());
         model.addAttribute("facilities", facilityService.findAll());
         model.addAttribute("attachFacilities", attachFacilityService.findAll());
@@ -58,13 +57,29 @@ public class ContractController {
         return "redirect:/contract";
     }
 
-    @RequestMapping("contractDetail/craete")
-    public String saveContractDetail(@ModelAttribute ContractDetail contractDetail, @RequestParam int id){
-        contractService.findById(id);
+    @RequestMapping("/contractDetail/create")
+    public String saveContractDetail(@ModelAttribute ContractDetail contractDetail) {
         contractDetailService.save(contractDetail);
-
-        return "redirect:/contract" ;
+        return "redirect:/contract";
     }
 
+    @GetMapping("/detail")
+    public String getContractDetail(@RequestParam int id,Model model, RedirectAttributes redirectAttributes){
+        List<ContractDetail> contractDetails = contractDetailService.findContractDetailByContract_Id(id);
+        List<ContractDetailDTO> contractDetailDTOList = new ArrayList<>();
+        double sumTotal = 0;
+        for (ContractDetail cd : contractDetails
+        ) {
+            ContractDetailDTO contractDetailDTO = new ContractDetailDTO();
+            BeanUtils.copyProperties(cd, contractDetailDTO);
+            contractDetailDTO.setTotal(cd.getAttachFacility().getCost() * cd.getQuantity());
+            sumTotal += contractDetailDTO.getTotal() ;
+            contractDetailDTOList.add(contractDetailDTO);
+        }
+        redirectAttributes.addFlashAttribute("contractDetailList", contractDetailDTOList);
+        redirectAttributes.addFlashAttribute("hasTrue", "true");
+        redirectAttributes.addFlashAttribute("sumTotal", sumTotal);
 
+        return "redirect:/contract";
+    }
 }

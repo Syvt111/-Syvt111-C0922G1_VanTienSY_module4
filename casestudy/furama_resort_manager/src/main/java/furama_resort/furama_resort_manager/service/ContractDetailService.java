@@ -21,17 +21,23 @@ public class ContractDetailService implements IContractDetailService {
 
     @Override
     public ContractDetail findById(int id) {
-        return null;
+        return contractDetailRepository.findById(id).get();
     }
 
     @Override
     public void save(ContractDetail contractDetail) {
+        contractDetailRepository.save(contractDetail);
 
     }
 
     @Override
     public void delete(int id) {
+        contractDetailRepository.deleteById(id);
+    }
 
+    @Override
+    public  List<ContractDetail> findContractDetailByContract_Id(int id) {
+        return contractDetailRepository.findContractDetailByContract_Id(id);
     }
 
 

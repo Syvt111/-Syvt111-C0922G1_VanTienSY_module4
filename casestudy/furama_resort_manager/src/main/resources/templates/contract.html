@@ -63,13 +63,16 @@
                 </th>
                 <th>
                     <button type="button"
-                            class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAttachFacilityModal">
+                            class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAttachFacilityModal"
+                            th:attr="onclick=|addAttachFacility('${ct.id}')|">
                         +
                     </button>
-                    <button type="button"
-                            class="btn btn-success" data-bs-toggle="modal" data-bs-target="#attachFacilityListModal">
-                        Attack Facility List
-                    </button>
+                    <a th:href="@{/contract/detail(id=${ct.id})}">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#attachFacilityListModal">
+                            Attach Facility Detail
+                        </button>
+                    </a>
                 </th>
             </tr>
             </tbody>
@@ -168,22 +171,24 @@
             <div class="modal-header justify-content-center m-2 p-0">
                 <h3 class="text-center text-success">Add Attach Facility</h3>
             </div>
-            <form class="form-horizontal" action="/contract/contractDetail/create" method="post" th:object="${contract}">
+            <form class="form-horizontal" action="/contract/contractDetail/create" method="post"
+                  th:object="${contractDetail}">
                 <div class="modal-body px-2 py-0">
                     <div class="m-2 row">
                         <div class="col-sm-8">
-                            <select type="text" class="form-control" th:field="*{customer.id}" id="attachFacilityName">
+                            <select type="text" class="form-control" th:field="*{attachFacility}"
+                                    id="addAttachFacility">
                                 <option th:each="attachFacility : ${attachFacilities}" th:value="${attachFacility.id}"
                                         th:text="${attachFacility.name}"></option>
                             </select>
                         </div>
                     </div>
-                    <div class="m-2 row">
-                        <div class="col-sm-8">
-                            <label class="col-sm-4 col-form-label">Quality</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" id="quality">
-                            </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Quality</label>
+                        <input type="hidden" th:field="*{contract}" id="addContractId">
+                        <div class="col-sm-10">
+                            <input type="number" id="quantityAdd" class="form-control" th:field="*{quantity}">
+
                         </div>
                     </div>
                 </div>
@@ -196,64 +201,77 @@
     </div>
 </div>
 
-<!--Modal Show and Add Attach Facility-->
-<div class="modal fade" id="attachFacilityListModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+<!--Modal Show Attach Facility-->
+<div th:class="${hasTrue=='true'? 'modal fade show':'modal fade'}"
+     th:style="${hasTrue =='true' ?'display:block':'display:none'}"
+     class="modal fade" id="attachFacilityListModal" tabindex="-1" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header justify-content-center m-2 p-0">
                 <h3 class="text-center text-success">Attach Facility List</h3>
             </div>
-            <form action="contract/contractDetail/create" th:object="${contractDetail}">
-                <div class="m-2 row">
-                    <div class="col-md-2">
-                        <label class="col-sm-4 col-form-label">Id</label>
-                    </div>
-                    <div class="col-md-2">
+            <table class="table">
+                <thead>
+                <tr class="m-2 row">
+                    <td class="col-md-2">
                         <label class="col-sm-4 col-form-label">Attach Facility Name</label>
-                    </div>
-                    <div class="col-md-2">
+                    </td>
+                    <td class="col-md-2">
                         <label class="col-sm-4 col-form-label">Cost</label>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="col-sm-4 col-form-label">Unit</label>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="col-sm-4 col-form-label">Status</label>
-                    </div>
-                    <div class="col-md-2">
-                    </div>
-                </div>
-                <div>
-                    <hr style="color: #262322; size: 5px">
-                </div>
-                <div class="m-2 row" th:each="af : ${attachFacilities}">
-                    <div class="col-md-2" >
-                        <label class="col-sm-4 col-form-label" th:text="${af.id}"></label>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="col-sm-4 col-form-label" th:text="${af.name}"></label>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="col-sm-4 col-form-label" th:text="${af.cost}"></label>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="col-sm-4 col-form-label" th:text="${af.unit}"></label>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="col-sm-4 col-form-label" th:text="${af.status}"></label>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit"
+                    </td>
+                    <td class="col-md-2">
+                        <label class="col-sm-4 col-form-label">Quality</label>
+                    </td>
+                    <td class="col-md-2">
+                        <label class="col-sm-4 col-form-label">Total</label>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="m-2 row" th:each="cdID : ${contractDetailList}">
+                    <td class="col-md-2">
+                        <label class="col-sm-4 col-form-label" th:text="${cdID.attachFacility.name}"></label>
+                    </td>
+                    <td class="col-md-2">
+                        <label class="col-sm-4 col-form-label" th:text="${cdID.attachFacility.cost}"></label>
+                    </td>
+                    <td class="col-md-2">
+                        <label class="col-sm-4 col-form-label" th:text="${cdID.quantity}"></label>
+                    </td>
+                    <td class="col-md-2">
+                        <label class="col-sm-4 col-form-label" th:text="${cdID.total}"></label>
+                    </td>
+                    <td class="col-md-2">
+                        <button type="button"
                                 class="btn btn-success" data-bs-toggle="modal">
                             +
                         </button>
-                    </div>
-                </div>
-            </form>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="3">Total</th>
+                    <td th:text="${sumTotal}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <a th:href="@{/contract}" style="color: white; text-decoration: none">Close</a>
+                </button>
+            </div>
         </div>
-
     </div>
 </div>
+<script>
+    function addAttachFacility(id) {
+        document.getElementById("addContractId").value = id;
+    }
+
+    function showContractDetail(contract_id) {
+        document.getElementById("addContractId").value = contract_id;
+    }
+
+</script>
 </body>
 </html>

@@ -67,6 +67,7 @@ public class ContractDTO {
     public ContractDTO() {
     }
 
+
     public ContractDTO(int id, String startDate, String endDate,
                     double deposit, Employee employee,
                     Customer customer, Facility facility,
@@ -78,6 +79,7 @@ public class ContractDTO {
         this.employee = employee;
         this.customer = customer;
     }
+
 
 
     public int getId() {

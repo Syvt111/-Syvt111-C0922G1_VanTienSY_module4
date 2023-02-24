@@ -1,41 +1,39 @@
-package furama_resort.furama_resort_manager.model;
+package furama_resort.furama_resort_manager.DTO;
+
+import furama_resort.furama_resort_manager.model.AttachFacility;
+import furama_resort.furama_resort_manager.model.Contract;
 
 import javax.persistence.*;
 
-@Entity
-public class ContractDetail {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ContractDetailDTO {
+
+
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "contract_id", referencedColumnName = "id")
     private Contract contract;
 
-    @ManyToOne
-    @JoinColumn(name = "attach_facility_id", referencedColumnName = "id")
     private AttachFacility attachFacility;
 
     private int quantity;
-    private double total;
+    private double total ;
 
-    public ContractDetail() {
-    }
-
-    public ContractDetail(int id, Contract contract, AttachFacility attachFacility, int quantity) {
-        this.id = id;
-        this.contract = contract;
-        this.attachFacility = attachFacility;
-        this.quantity = quantity;
-    }
-
-    public ContractDetail(int id, Contract contract, AttachFacility attachFacility, int quantity, double total) {
+    public ContractDetailDTO(int id, Contract contract, AttachFacility attachFacility, int quantity, double total) {
         this.id = id;
         this.contract = contract;
         this.attachFacility = attachFacility;
         this.quantity = quantity;
         this.total = total;
+    }
+
+    public ContractDetailDTO() {
+    }
+
+    public ContractDetailDTO(int id, Contract contract, AttachFacility attachFacility, int quantity) {
+        this.id = id;
+        this.contract = contract;
+        this.attachFacility = attachFacility;
+        this.quantity = quantity;
     }
 
     public double getTotal() {
@@ -46,8 +44,8 @@ public class ContractDetail {
         this.total = total;
     }
 
-    public double getMoney() {
-        return quantity * attachFacility.getCost();
+    public double getMoney(){
+        return quantity*attachFacility.getCost();
     }
 
     public int getId() {

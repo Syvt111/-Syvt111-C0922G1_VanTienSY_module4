@@ -1,5 +1,7 @@
 package furama_resort.furama_resort_manager.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -40,6 +42,7 @@ public class Facility {
     @Column(columnDefinition = "text")
     private String facilityFree;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "facility")
     private Set<Contract> contractSet;
 

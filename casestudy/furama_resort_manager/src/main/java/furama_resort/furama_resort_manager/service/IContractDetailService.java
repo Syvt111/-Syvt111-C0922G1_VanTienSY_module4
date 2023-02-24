@@ -10,4 +10,5 @@ public interface IContractDetailService {
     ContractDetail findById(int id);
     void save(ContractDetail contractDetail);
     void delete(int id);
+    List<ContractDetail> findContractDetailByContract_Id(int id);
 }

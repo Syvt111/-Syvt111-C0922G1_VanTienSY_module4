@@ -13,10 +13,10 @@ public interface IContractRepository extends JpaRepository<Contract,Integer> {
     @Override
     Page<Contract> findAll(Pageable pageable);
 
-    @Query(value = "select (ifnull(f.cost,0) + ifnull(sum( af.cost * cd.quantity),0)) as total from `contract` c " +
-            "left join `contract_detail` cd on c.id = cd.id left join `attach_facility` af on af.id = cd.id left join " +
-            "`facility` f on c.id = f.id where c.id = :contractId group by c.id", nativeQuery = true)
+    @Query(value = "select (ifnull(f.cost,0) + ifnull(sum( af.cost * cd.quantity),0)) as total from `contract` c\n" +
+            "    left join `contract_detail` cd on c.id = cd.contract_id\n" +
+            "    left join `attach_facility` af on af.id = cd.attach_facility_id\n" +
+            "    left join `facility` f on c.facility_id = f.id where c.id = :contractId group by c.id", nativeQuery = true)
     Double calculateTotal(@Param("contractId") int contractId);
-
 
 }
