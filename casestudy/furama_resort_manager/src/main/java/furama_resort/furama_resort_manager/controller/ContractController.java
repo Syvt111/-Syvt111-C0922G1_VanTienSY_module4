@@ -35,7 +35,7 @@ public class ContractController {
 
 
     @RequestMapping("")
-    public String showAllAndSearchSort(@RequestParam(defaultValue = "0") int id, Model model,
+    public String showAllAndSearchSort(@RequestParam(defaultValue = "0") int id, Model model,RedirectAttributes redirectAttributes,
                                        @PageableDefault(size = 7, page = 0, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<ContractDTO> contracts;
         contracts = contractService.getAllContractDTO(pageable);
@@ -47,11 +47,14 @@ public class ContractController {
         model.addAttribute("customers", customerService.findAll());
         model.addAttribute("facilities", facilityService.findAll());
         model.addAttribute("attachFacilities", attachFacilityService.findAll());
+        redirectAttributes.addFlashAttribute("hasTrues", "true");
         return "contract";
     }
 
     @RequestMapping("/create")
-    public String saveContract(@ModelAttribute Contract contract, RedirectAttributes redirectAttributes) {
+    public String saveContract(@ModelAttribute Contract contract, ContractDetail contractDetail, RedirectAttributes redirectAttributes) {
+        contractService.save(contract);
+        contractDetailService.save(contractDetail);
         contractService.save(contract);
         redirectAttributes.addFlashAttribute("msg", "Successfully added new facility ! ");
         return "redirect:/contract";
