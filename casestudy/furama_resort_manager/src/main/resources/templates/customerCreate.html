@@ -8,12 +8,8 @@
 <div>
     <h3 style="text-align: center">Create New Customer</h3>
     <p th:text="${msg}" style="color: red"></p>
-    <form action="/customer/create" method="post" th:object="${customer}">
+    <form action="/customer/create" method="post" th:object="${customerDTO}">
         <table class="table table-striped table-bordered">
-            <tr>
-                <th>Id</th>
-                <td><input type="hidden" th:field="*{id}"></td>
-            </tr>
             <tr>
                 <th>Customer Type</th>
                 <td>
@@ -25,33 +21,47 @@
             </tr>
             <tr>
                 <th>Customer Name</th>
-                <td><input type="text" th:field="*{name}"></td>
+                <td><input type="text" th:field="*{name}">
+                    <span th:errors="*{name}" th:if="${(#fields.hasErrors('name'))}"></span>
+                </td>
             </tr>
             <tr>
                 <th>Birthday</th>
-                <td><input type="date" th:field="*{dayOfBirth}"></td>
+                <td><input type="date" th:field="*{dayOfBirth}">
+                    <span th:errors="*{dayOfBirth}" th:if="${#fields.hasErrors('dayOfBirth')}"></span>
+                </td>
             </tr>
             <tr>
                 <th>Gender</th>
-                <td><input type="radio" th:field="*{gender}" th:value="${0}"th:text="Nữ">
-                    <input type="radio" th:field="*{gender}" th:value="${1}"th:text="Nam">
+                <td><input type="radio" th:field="*{gender}" th:value="${0}" th:text="Nữ">
+                    <input type="radio" th:field="*{gender}" th:value="${1}" th:text="Nam">
+                    <span th:errors="*{gender}" th:if="${#fields.hasErrors('gender')}"></span>
                 </td>
             </tr>
             <tr>
                 <th>Id Card</th>
-                <td><input type="text" th:field="*{idCard}"></td>
+                <td><input type="text" th:field="*{idCard}">
+                    <span th:errors="*{idCard}" th:if="${#fields.hasErrors('idCard')}"></span>
+                </td>
             </tr>
             <tr>
                 <th>Phone Number</th>
-                <td><input type="text" th:field="*{phoneNumber}"></td>
+                <td><input type="text" th:field="*{phoneNumber}">
+                    <span th:errors="*{phoneNumber}" th:if="${#fields.hasErrors('phoneNumber')}"></span>
+                </td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td><input type="email" th:field="*{email}"></td>
+                <td><input type="email" th:field="*{email}">
+                    <span th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></span>
+                </td>
             </tr>
             <tr>
                 <th>Address</th>
-                <td><input type="text" th:field="*{address}"></td>
+                <td><input type="text" th:field="*{address}">
+                    <span th:errors="*{address}" th:if="${#fields.hasErrors('address')}"></span>
+                </td>
+
             </tr>
 
             <tr>
